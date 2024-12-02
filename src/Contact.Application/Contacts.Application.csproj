@@ -7,8 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Contact.Domain\Contacts.Domain.csproj" />
-    <ProjectReference Include="..\Contact.Infrastructure\Contacts.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

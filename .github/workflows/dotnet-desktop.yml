@@ -9,7 +9,7 @@ on:
 jobs:
   job-build: 
 
-    runs-on: ubuntu-latest
+    runs-on: microsoft-latest
 
     env:
       Solution_Name: ./src/TechChallenge-PhaseTwo.sln                 # Replace with your solution name, i.e. MyWpfApp.sln.
@@ -36,7 +36,7 @@ jobs:
       
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: dotnet build $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration /p:Platform="Any CPU"
+      run: dotnet build $env:Solution_Name
       env:
         Configuration: ${{ matrix.configuration }}
 

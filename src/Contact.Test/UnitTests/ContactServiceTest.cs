@@ -22,8 +22,8 @@ public class ContactServiceTests
         // Arrange
         var contacts = new List<Contact>
         {
-            new Contact { Id = Guid.NewGuid(), Name = "Bruno", Phone = new ContactPhone { DDD = "11", Number = "123456789" } },
-            new Contact { Id = Guid.NewGuid(), Name = "Lucas", Phone = new ContactPhone { DDD = "22", Number = "987654321" } }
+            new Contact { Id = Guid.NewGuid(), Name = "Bruno", Phone = new ContactPhone { DDD = "11", Number = "988776655" }, Email = new ContactEmail { Address = "bruno@teste.com"} },
+            new Contact { Id = Guid.NewGuid(), Name = "Lucas", Phone = new ContactPhone { DDD = "22", Number = "988776655" },Email = new ContactEmail { Address = "lucas@teste.com"} }
         };
 
         _repositoryMock.Setup(r => r.Query(false)).Returns(contacts.AsQueryable());
@@ -42,8 +42,8 @@ public class ContactServiceTests
         // Arrange
         var contacts = new List<Contact>
         {
-            new Contact { Id = Guid.NewGuid(), Name = "Bruno", Phone = new ContactPhone { DDD = "11", Number = "123456789" } },
-            new Contact { Id = Guid.NewGuid(), Name = "Lucas", Phone = new ContactPhone { DDD = "22", Number = "987654321" } }
+            new Contact { Id = Guid.NewGuid(), Name = "Bruno", Phone = new ContactPhone { DDD = "11", Number = "988776655" }, Email = new ContactEmail { Address = "bruno@teste.com"} },
+            new Contact { Id = Guid.NewGuid(), Name = "Lucas", Phone = new ContactPhone { DDD = "22", Number = "988776655" }, Email = new ContactEmail { Address = "lucas@teste.com"} }
         };
 
         _repositoryMock.Setup(r => r.Query(false)).Returns(contacts.AsQueryable());
@@ -60,7 +60,7 @@ public class ContactServiceTests
     public void Create_ShouldCallRepositoryCreate_WhenValid()
     {
         // Arrange
-        var dto = new ContactDto { Name = "Bruno", PhoneDDD = "11", PhoneNumber = "123456789", EmailAddress = "bruno@teste.com" };
+        var dto = new ContactDto { Name = "Bruno", PhoneDDD = "11", PhoneNumber = "988776655", EmailAddress = "bruno@teste.com" };
 
         // Act
         _service.Create(dto);
@@ -74,8 +74,8 @@ public class ContactServiceTests
     {
         // Arrange
         var contactId = Guid.NewGuid();
-        var existingContact = new Contact { Id = contactId, Name = "Bruno" };
-        var dto = new ContactDto { Id = contactId, Name = "Raphael", PhoneDDD = "11", PhoneNumber = "123456789", EmailAddress = "raphael@teste.com" };
+        var existingContact = new Contact { Id = contactId, Name = "Bruno", Phone = new ContactPhone { DDD = "11", Number = "988776655" }, Email = new ContactEmail { Address = "bruno@teste.com" } };
+        var dto = new ContactDto { Id = contactId, Name = "Raphael", PhoneDDD = "11", PhoneNumber = "988776655", EmailAddress = "raphael@teste.com" };
 
         _repositoryMock.Setup(r => r.GetById(contactId, false)).Returns(existingContact);
 
@@ -104,7 +104,7 @@ public class ContactServiceTests
     public void EnsureValidation_ShouldThrowException_WhenNameIsEmpty()
     {
         // Arrange
-        var dto = new ContactDto { Name = "", PhoneDDD = "11", PhoneNumber = "123456789", EmailAddress = "bruno@teste.com" };
+        var dto = new ContactDto { Name = "", PhoneDDD = "11", PhoneNumber = "988776655", EmailAddress = "bruno@teste.com" };
 
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() => _service.Create(dto));
@@ -115,7 +115,7 @@ public class ContactServiceTests
     public void EnsureValidation_ShouldThrowException_WhenPhoneDDDIsInvalid()
     {
         // Arrange
-        var dto = new ContactDto { Name = "Bruno", PhoneDDD = "999", PhoneNumber = "123456789", EmailAddress = "bruno@teste.com" };
+        var dto = new ContactDto { Name = "Bruno", PhoneDDD = "999", PhoneNumber = "988776655", EmailAddress = "bruno@teste.com" };
 
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() => _service.Create(dto));
@@ -137,7 +137,7 @@ public class ContactServiceTests
     public void EnsureValidation_ShouldThrowException_WhenEmailIsInvalid()
     {
         // Arrange
-        var dto = new ContactDto { Name = "Bruno", PhoneDDD = "11", PhoneNumber = "123456789", EmailAddress = "email-invalido" };
+        var dto = new ContactDto { Name = "Bruno", PhoneDDD = "11", PhoneNumber = "988776655", EmailAddress = "email-invalido" };
 
         // Act & Assert
         var exception = Assert.Throws<ArgumentException>(() => _service.Create(dto));

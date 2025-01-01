@@ -42,6 +42,6 @@ jobs:
     - name: Execute unit tests
       run: dotnet build $env:Test_Project_Path
 
-    - name: Executing test message
+    - name: Bye-bye
       run: echo Build finalizado!
     

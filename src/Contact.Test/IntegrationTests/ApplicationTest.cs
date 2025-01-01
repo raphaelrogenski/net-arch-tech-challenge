@@ -1,4 +1,4 @@
-﻿namespace Contacts.Test.Tests
+﻿namespace Contacts.Test.IntegrationTests
 {
     public class ApplicationTest
     {

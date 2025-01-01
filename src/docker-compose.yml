@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  contacts-api:
+    build:
+      context: .  # Caminho para o diretório onde está o Dockerfile
+      dockerfile: Dockerfile  # Nome do arquivo Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development  # Variável de ambiente para definir o ambiente de desenvolvimento
+      ConnectionStrings__DefaultConnection: "Server=sqlserver,1433;Database=G60_TechChallenge_02;User ID=sa;Password=senha@123;MultipleActiveResultSets=true;TrustServerCertificate=true"
+    ports:
+      - "8080:8080"  # Mapeando a porta do contêiner para a máquina local
+    networks:
+      - monitoring  # Definindo uma rede para comunicação entre os contêineres
+    volumes:
+      - ./UserSecrets:/root/.microsoft/usersecrets:ro  # Volume de leitura para UserSecrets
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest  # Imagem oficial do SQL Server
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=senha@123
+    ports:
+      - "1433:1433"  # Porta padrão do SQL Server
+    networks:
+      - monitoring  # Rede compartilhada entre os contêineres
+    volumes:
+      - sql_data:/var/opt/mssql  # Volumes persistentes para o banco de dados
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  sql_data:

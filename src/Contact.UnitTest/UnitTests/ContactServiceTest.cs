@@ -4,7 +4,7 @@ using Contacts.Domain.Contacts.Dto;
 using Contacts.Domain.Contacts.Models;
 using Contacts.Domain.Contacts.Repositories;
 
-namespace Contacts.Test.UnitTests;
+namespace Contacts.UnitTest.UnitTests;
 public class ContactServiceTests
 {
     private readonly Mock<IContactRepository> _repositoryMock;

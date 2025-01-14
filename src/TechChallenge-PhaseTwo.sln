@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Infrastructure", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contacts.Application", "Contact.Application\Contacts.Application.csproj", "{B1F0DB28-D905-47B1-87B8-DCEE0F591C6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.UnitTest", "Contacts.UnitTest\Contacts.UnitTest.csproj", "{DEF1346B-4FF3-4FEC-964B-71438293BB69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.UnitTest", "Contact.UnitTest\Contacts.UnitTest.csproj", "{DEF1346B-4FF3-4FEC-964B-71438293BB69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.IntegrationTest", "Contacts.IntegrationTest\Contacts.IntegrationTest.csproj", "{62C30E3C-1C22-47E3-918C-7A53EAB13EEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contacts.IntegrationTest", "Contact.IntegrationTest\Contacts.IntegrationTest.csproj", "{62C30E3C-1C22-47E3-918C-7A53EAB13EEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

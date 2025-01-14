@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Contacts.Test.IntegrationTests
+namespace Contacts.IntegrationTest.IntegrationTests
 {
     public class ContactControllerTest : IDisposable
     {

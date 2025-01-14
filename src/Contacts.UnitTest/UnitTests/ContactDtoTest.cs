@@ -2,7 +2,7 @@
 using Contacts.Domain.Contacts.Models;
 using FluentAssertions;
 
-namespace Contacts.Test.UnitTests;
+namespace Contacts.UnitTest.UnitTests;
 public class ContactDtoTests
 {
     [Fact]

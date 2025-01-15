@@ -15,6 +15,19 @@ public class DbInitializer
     public void Initialize()
     {
         using var context = DbContextFactory.CreateDbContext(_configuration);
-        context.Database.Migrate();
+
+        if (!context.Database.CanConnect())
+        {
+            context.Database.Migrate();
+        }
+        else
+        {
+            var pendingMigrations = context.Database.GetPendingMigrations();
+
+            if (pendingMigrations.Any())
+            {
+                context.Database.Migrate();
+            }
+        }
     }
 }

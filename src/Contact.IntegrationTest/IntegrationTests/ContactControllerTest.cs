@@ -7,9 +7,10 @@ using Contacts.Infrastructure.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Contacts.Test.IntegrationTests
+namespace Contacts.IntegrationTest.IntegrationTests
 {
     public class ContactControllerTest : IDisposable
     {
@@ -51,8 +52,9 @@ namespace Contacts.Test.IntegrationTests
 
             builder = WebApplication.CreateBuilder();
             builder.Services.AddSingleton<DbInitializer>();
+            var connectionString = builder.Configuration.GetConnectionString("TestConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                 options.UseSqlite("Filename=:memory:"));
+             options.UseSqlite(connectionString));
             builder.Services.AddInfrastructureDI();
             builder.Services.AddApplicationDI();
             builder.Services.AddControllers();

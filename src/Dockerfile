@@ -6,24 +6,24 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copiar o arquivo .csproj da pasta src/Contact.Api para o diretório de trabalho no container
+# Copiar o arquivo .csproj e restaurar as dependências
 COPY ["Contact.Api/Contacts.Api.csproj", "Contact.Api/"]
-
-# Restaurar dependências
 RUN dotnet restore "Contact.Api/Contacts.Api.csproj"
 
-# Copiar o restante dos arquivos
+# Copiar o restante dos arquivos e compilar
 COPY . .
-
-# Publicar a aplicação
-RUN dotnet publish "Contact.Api/Contacts.Api.csproj" -c Release -o /app
+WORKDIR "/src/Contact.Api"
+RUN dotnet publish -c Release -o /app
 
 # Usar a imagem do runtime para rodar
 FROM base AS final
 WORKDIR /app
 
-# Copiar os arquivos publicados da etapa de build
+# Copiar os arquivos publicados
 COPY --from=build /app .
 
-# Definir o ponto de entrada da aplicação
+# Expor a porta para a API
+EXPOSE 8080
+
+# Definir o ponto de entrada
 ENTRYPOINT ["dotnet", "Contacts.Api.dll"]

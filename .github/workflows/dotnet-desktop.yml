@@ -12,8 +12,7 @@ jobs:
     runs-on: windows-latest
 
     env:
-      Solution_Name: ./src/TechChallenge-PhaseTwo.sln                     # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: ./src/Contact.Test/Contacts.Test.csproj         # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      Solution_Name: ./src/TechChallenge-PhaseTwo.sln                     # Solução principal.
       Configuration: Debug
       
     steps:
@@ -22,26 +21,29 @@ jobs:
       with:
         fetch-depth: 0
 
-    # Install the .NET Core workload
+    # Instalação do .NET Core
     - name: Install .NET Core
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
 
-    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    # Adiciona o MSBuild ao PATH
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v2
       
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    # Restaura a solução
     - name: Restore the application
       run: dotnet build $env:Solution_Name
       env:
         Configuration: ${{ matrix.configuration }}
 
-    # Execute all unit tests in the solution
+    # # Executa os testes de integração
+    # - name: Execute integration tests
+      # run: dotnet test ./src/Contact.IntegrationTest/Contacts.IntegrationTest.csproj --configuration $env:Configuration
+
+    # Executa os testes unitários
     - name: Execute unit tests
-      run: dotnet build $env:Test_Project_Path
+      run: dotnet test ./src/Contact.UnitTest/Contacts.UnitTest.csproj --configuration $env:Configuration
 
     - name: Bye-bye
-      run: echo Build finalizado!
-    
+      run: echo Build e testes finalizados!

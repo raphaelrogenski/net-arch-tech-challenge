@@ -7,6 +7,7 @@ using Contacts.Infrastructure.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Contacts.IntegrationTest.IntegrationTests
@@ -51,8 +52,9 @@ namespace Contacts.IntegrationTest.IntegrationTests
 
             builder = WebApplication.CreateBuilder();
             builder.Services.AddSingleton<DbInitializer>();
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+             options.UseInMemoryDatabase(connectionString));
             builder.Services.AddInfrastructureDI();
             builder.Services.AddApplicationDI();
             builder.Services.AddControllers();
@@ -62,12 +64,13 @@ namespace Contacts.IntegrationTest.IntegrationTests
             var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
             dbInitializer.Initialize();
 
-            // Não é necessário abrir a conexão ou criar o banco explicitamente para o InMemoryDatabase
+            var dbContext = app.Services.GetRequiredService<AppDbContext>();
+            dbContext.Database.OpenConnection();
+            dbContext.Database.EnsureCreated();
 
             var service = app.Services.GetRequiredService<IContactService>();
             controller = new ContactController(service);
         }
-
 
         public void Dispose()
         {

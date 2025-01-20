@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Contacts.Infrastructure.Contexts;
 
+[ExcludeFromCodeCoverage]
 public class DbInitializer
 {
     private readonly IConfiguration _configuration;

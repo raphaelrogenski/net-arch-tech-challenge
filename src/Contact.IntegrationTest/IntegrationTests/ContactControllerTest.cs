@@ -52,7 +52,7 @@ namespace Contacts.IntegrationTest.IntegrationTests
             builder = WebApplication.CreateBuilder();
             builder.Services.AddSingleton<DbInitializer>();
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+                 options.UseSqlite("Filename=:memory:"));
             builder.Services.AddInfrastructureDI();
             builder.Services.AddApplicationDI();
             builder.Services.AddControllers();
@@ -62,10 +62,13 @@ namespace Contacts.IntegrationTest.IntegrationTests
             var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
             dbInitializer.Initialize();
 
+            var dbContext = app.Services.GetRequiredService<AppDbContext>();
+            dbContext.Database.OpenConnection();
+            dbContext.Database.EnsureCreated();
+
             var service = app.Services.GetRequiredService<IContactService>();
             controller = new ContactController(service);
         }
-
 
         public void Dispose()
         {

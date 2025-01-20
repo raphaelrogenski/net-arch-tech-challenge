@@ -7,7 +7,6 @@ using Contacts.Infrastructure.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Contacts.IntegrationTest.IntegrationTests
@@ -52,25 +51,21 @@ namespace Contacts.IntegrationTest.IntegrationTests
 
             builder = WebApplication.CreateBuilder();
             builder.Services.AddSingleton<DbInitializer>();
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AppDbContext>(options =>
-             options.UseInMemoryDatabase(connectionString));
+                options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
             builder.Services.AddInfrastructureDI();
             builder.Services.AddApplicationDI();
             builder.Services.AddControllers();
 
             app = builder.Build();
 
-            var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
-            dbInitializer.Initialize();
-
-            var dbContext = app.Services.GetRequiredService<AppDbContext>();
-            dbContext.Database.OpenConnection();
-            dbContext.Database.EnsureCreated();
+            //var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
+            ////dbInitializer.Initialize();
 
             var service = app.Services.GetRequiredService<IContactService>();
             controller = new ContactController(service);
         }
+
 
         public void Dispose()
         {

@@ -37,9 +37,9 @@ jobs:
       env:
         Configuration: ${{ matrix.configuration }}
 
-    # # Executa os testes de integração
-    # - name: Execute integration tests
-      # run: dotnet test ./src/Contact.IntegrationTest/Contacts.IntegrationTest.csproj --configuration $env:Configuration
+    # Executa os testes de integração
+    - name: Execute integration tests
+      run: dotnet test ./src/Contact.IntegrationTest/Contacts.IntegrationTest.csproj --configuration $env:Configuration
 
     # Executa os testes unitários
     - name: Execute unit tests

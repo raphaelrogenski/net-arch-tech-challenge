@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Contacts.Domain.Contacts.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Contacts.Infrastructure.Mappings;
 
+[ExcludeFromCodeCoverage]
 public class ContactMapping : IEntityTypeConfiguration<Contact>
 {
     public void Configure(EntityTypeBuilder<Contact> builder)

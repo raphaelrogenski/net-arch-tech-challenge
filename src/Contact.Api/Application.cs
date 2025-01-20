@@ -2,9 +2,11 @@
 using Contacts.Infrastructure.Contexts;
 using Contacts.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Contacts.Api
 {
+    [ExcludeFromCodeCoverage]
     public static class Application
     {
         public static WebApplication GetWebApplication(string[] args)

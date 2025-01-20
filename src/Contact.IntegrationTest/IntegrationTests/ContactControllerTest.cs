@@ -59,9 +59,6 @@ namespace Contacts.IntegrationTest.IntegrationTests
 
             app = builder.Build();
 
-            var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
-            dbInitializer.Initialize();
-
             var dbContext = app.Services.GetRequiredService<AppDbContext>();
             dbContext.Database.OpenConnection();
             dbContext.Database.EnsureCreated();

@@ -59,8 +59,8 @@ namespace Contacts.IntegrationTest.IntegrationTests
 
             app = builder.Build();
 
-            //var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
-            ////dbInitializer.Initialize();
+            var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
+            dbInitializer.Initialize();
 
             var service = app.Services.GetRequiredService<IContactService>();
             controller = new ContactController(service);

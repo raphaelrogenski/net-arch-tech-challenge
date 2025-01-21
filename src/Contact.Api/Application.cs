@@ -2,6 +2,7 @@
 using Contacts.Infrastructure.Contexts;
 using Contacts.Infrastructure.DI;
 using Microsoft.EntityFrameworkCore;
+using Prometheus;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Contacts.Api
@@ -50,6 +51,12 @@ namespace Contacts.Api
             app.UseAuthorization();
 
             app.MapControllers();
+
+            // Enable metrics for latency, requests by endpoint, etc
+            app.UseHttpMetrics();
+
+            // Enable route /metrics, default for prometheus
+            app.UseMetricServer();
 
             return app;
         }

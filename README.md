@@ -1,5 +1,5 @@
-# TechChallenge-PhaseTwo
-PÓS TECH FIAP - Projeto Fase 3 - GRUPO 23
+# TechChallenge
+PÓS TECH FIAP - Tech Challenge - GRUPO 23
 
 # Members
 - Bruno Rocha - RM358676

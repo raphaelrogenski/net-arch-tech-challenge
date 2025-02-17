@@ -1,0 +1,49 @@
+name: Tech Challenge - Phase Two - Grupo 60
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  job-build: 
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: ./src/TechChallenge-PhaseTwo.sln                     # Solução principal.
+      Configuration: Debug
+      
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # Instalação do .NET Core
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    # Adiciona o MSBuild ao PATH
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+      
+    # Restaura a solução
+    - name: Restore the application
+      run: dotnet build $env:Solution_Name
+      env:
+        Configuration: ${{ matrix.configuration }}
+
+    # Executa os testes de integração
+    - name: Execute integration tests
+      run: dotnet test ./src/Contact.IntegrationTest/Contacts.IntegrationTest.csproj --configuration $env:Configuration
+
+    # Executa os testes unitários
+    - name: Execute unit tests
+      run: dotnet test ./src/Contact.UnitTest/Contacts.UnitTest.csproj --configuration $env:Configuration
+
+    - name: Bye-bye
+      run: echo Build e testes finalizados!

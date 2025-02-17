@@ -1,0 +1,348 @@
+{
+	"info": {
+		"_postman_id": "0478611d-4e83-421d-8319-780eb0b050ac",
+		"name": "FIAP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5193194"
+	},
+	"item": [
+		{
+			"name": "TechChallenge - Phase 1",
+			"item": [
+				{
+					"name": "Get Contacts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5242/api/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5242",
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sample",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5242/api/contacts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5242",
+									"path": [
+										"api",
+										"contacts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2024 06:38:17 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"19b8e056-4790-440f-8669-fa8f97dd6c4d\",\n        \"createdAt\": \"2024-10-28T03:33:37.4854752\",\n        \"name\": \"Rogenski\",\n        \"phoneNumber\": \"999004949\",\n        \"phoneDDD\": \"42\",\n        \"emailAddress\": \"raphaelrogenski@gmail.com\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Contacts by DDD",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5242/api/contacts/ByDDD/42",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5242",
+							"path": [
+								"api",
+								"contacts",
+								"ByDDD",
+								"42"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sample",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5242/api/contacts/ByDDD/42",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5242",
+									"path": [
+										"api",
+										"contacts",
+										"ByDDD",
+										"42"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2024 06:38:26 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"19b8e056-4790-440f-8669-fa8f97dd6c4d\",\n        \"createdAt\": \"2024-10-28T03:33:37.4854752\",\n        \"name\": \"Rogenski\",\n        \"phoneNumber\": \"999004949\",\n        \"phoneDDD\": \"42\",\n        \"emailAddress\": \"raphaelrogenski@gmail.com\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create Contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Rogenski\",\r\n    \"phonenumber\": \"999004949\",\r\n    \"phoneddd\": \"42\",\r\n    \"emailaddress\": \"raphaelrogenski@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5242/api/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5242",
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sample",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Rogenski\",\r\n    \"phonenumber\": \"999004949\",\r\n    \"phoneddd\": \"42\",\r\n    \"emailaddress\": \"raphaelrogenski@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5242/api/contacts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5242",
+									"path": [
+										"api",
+										"contacts"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2024 06:33:36 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Update Contact",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"19b8e056-4790-440f-8669-fa8f97dd6c4d\",\r\n    \"name\": \"Rogenski\",\r\n    \"phonenumber\": \"999004949\",\r\n    \"phoneddd\": \"42\",\r\n    \"emailaddress\": \"raphaelrogenski@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5242/api/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5242",
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sample",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"19b8e056-4790-440f-8669-fa8f97dd6c4d\",\r\n    \"name\": \"Rogenski\",\r\n    \"phonenumber\": \"999004949\",\r\n    \"phoneddd\": \"42\",\r\n    \"emailaddress\": \"raphaelrogenski@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5242/api/contacts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5242",
+									"path": [
+										"api",
+										"contacts"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2024 06:38:53 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "Delete Contact",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5242/api/contacts/5413b21b-fbb8-4738-836c-5bbaef352b00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5242",
+							"path": [
+								"api",
+								"contacts",
+								"5413b21b-fbb8-4738-836c-5bbaef352b00"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sample",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5242/api/contacts/19b8e056-4790-440f-8669-fa8f97dd6c4d",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5242",
+									"path": [
+										"api",
+										"contacts",
+										"19b8e056-4790-440f-8669-fa8f97dd6c4d"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Mon, 28 Oct 2024 06:39:16 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	]
+}

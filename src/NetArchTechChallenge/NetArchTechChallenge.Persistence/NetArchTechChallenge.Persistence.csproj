@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-NetArchTechChallenge.Persistence-b4a840c9-941b-48e8-8c80-8024ef05f371</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Workers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetArchTechChallenge.Shared.Application\NetArchTechChallenge.Shared.Application.csproj" />
+    <ProjectReference Include="..\NetArchTechChallenge.Shared.Domain\NetArchTechChallenge.Shared.Domain.csproj" />
+    <ProjectReference Include="..\NetArchTechChallenge.Shared.Infrastructure\NetArchTechChallenge.Shared.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

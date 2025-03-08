@@ -19,5 +19,20 @@ namespace NetArchTechChallenge.Shared.Application.Services
                 .Where(r => string.IsNullOrEmpty(ddd) || r.PhoneDDD == ddd)
                 .Select(ContactDto.Cast).ToList();
         }
+
+        public bool ContactNameAlreadyExists(string contactName, Guid ignoreGuid = default)
+        {
+            return contactRepository.ContactNameAlreadyExists(contactName, ignoreGuid); 
+        }
+
+        public bool ContactPhoneAlreadyExists(string contactPhoneDDD, string contactPhoneNumber, Guid ignoreGuid = default)
+        {
+            return contactRepository.ContactPhoneAlreadyExists(contactPhoneDDD, contactPhoneNumber, ignoreGuid);
+        }
+
+        public bool ContactEmailAlreadyExists(string contactEmailAddress, Guid ignoreGuid = default)
+        {
+            return contactRepository.ContactEmailAlreadyExists(contactEmailAddress, ignoreGuid);
+        }
     }
 }

@@ -1,0 +1,141 @@
+networks:
+  netarch-network:
+    driver: bridge   
+
+services:
+
+  # Prometheus
+  tools-prometheus:
+    image: prom/prometheus:latest
+    container_name: tools-prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - netarch-network
+    # depends_on:
+      # - app-commands
+      # - app-persistence
+      # - app-query
+      # - app-dlqmonitor
+
+  # Grafana
+  tools-grafana:
+    image: grafana/grafana:latest
+    container_name: tools-grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - netarch-network
+    depends_on:
+      - tools-prometheus
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  # RabbitMQ com painel de controle
+  tools-rabbitmq:
+    image: rabbitmq:3-management
+    container_name: tools-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - netarch-network
+
+  # SQL Server
+  tools-sqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: tools-sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "SuaSenha123!"
+      ACCEPT_EULA: "Y"
+    networks:
+      - netarch-network
+
+  # Commands API
+  app-commands:
+    build:
+      context: .
+      dockerfile: NetArchTechChallenge.Commands/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      RabbitMQ__HostName: tools-rabbitmq
+    container_name: app-commands
+    ports:
+      - "8080:8080"
+    networks:
+      - netarch-network
+    depends_on:
+      - tools-sqlserver
+      - tools-rabbitmq
+#      - app-query
+
+  # Persistence Worker
+  app-persistence:
+    build:
+      context: .
+      dockerfile: NetArchTechChallenge.Persistence/Dockerfile
+    container_name: app-persistence
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=tools-sqlserver,1433;Database=NetArch;User ID=sa;Password=SuaSenha123!;MultipleActiveResultSets=true;TrustServerCertificate=true"
+      RabbitMQ__HostName: tools-rabbitmq
+    ports:
+      - "9091:9091"
+    networks:
+      - netarch-network
+    depends_on:
+      - tools-sqlserver
+      - tools-rabbitmq
+
+  # Query (Azure Function Isolated)
+  app-query:
+    build:
+      context: .
+      dockerfile: NetArchTechChallenge.Query/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Server=tools-sqlserver,1433;Database=NetArch;User ID=sa;Password=SuaSenha123!;MultipleActiveResultSets=true;TrustServerCertificate=true"
+    container_name: app-query
+    ports:
+      - "7071:80"
+    networks:
+      - netarch-network
+    depends_on:
+      - tools-sqlserver
+
+  # DLQMonitor (Azure Function Isolated)
+  app-dlqmonitor:
+    build:
+      context: .
+      dockerfile: NetArchTechChallenge.DLQMonitor/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    container_name: app-dlqmonitor
+    ports:
+      - "7072:80"
+    networks:
+      - netarch-network
+    depends_on:
+      - tools-sqlserver
+      - tools-rabbitmq
+
+  app-gateway:
+    build:
+      context: .
+      dockerfile: NetArchTechChallenge.Gateway/Dockerfile
+    container_name: app-gateway
+    ports:
+      - "8000:8080"
+    networks:
+      - netarch-network
+    depends_on:
+      - app-commands
+      - app-query

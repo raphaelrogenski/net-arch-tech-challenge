@@ -1,11 +1,4 @@
-namespace NetArchTechChallenge.Persistence
-{
-    public class Program
-    {
-        public static async void Main(string[] args)
-        {
-            var application = new Application();
-            await application.GetApplication(args).RunAsync();
-        }
-    }
-}
+using NetArchTechChallenge.Persistence;
+
+var application = new Application();
+application.Run(args);

@@ -1,51 +1,50 @@
-﻿using NetArchTechChallenge.Shared.Application.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using NetArchTechChallenge.Persistence.Consumers;
+using NetArchTechChallenge.Persistence.Workers;
+using NetArchTechChallenge.Shared.Application.Messaging;
+using NetArchTechChallenge.Shared.Application.Services;
 using NetArchTechChallenge.Shared.Domain.Repositories;
-using NetArchTechChallenge.Shared.Infrastructure.Base;
+using NetArchTechChallenge.Shared.Infrastructure.DbContexts;
+using NetArchTechChallenge.Shared.Infrastructure.Messaging;
 using NetArchTechChallenge.Shared.Infrastructure.Repositories;
+using Prometheus;
 
 namespace NetArchTechChallenge.Persistence
 {
-    public static class Application
+    public class Application
     {
-        public static IHost GetApplication(string[] args)
+        public void Run(string[] args)
         {
-            var builder = Host.CreateApplicationBuilder(args);
-            builder.AddAppSettingsFile();
+            var host = Host.CreateDefaultBuilder(args);
+            host.ConfigureAppConfiguration((hostingContext, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                config.AddEnvironmentVariables();
+            });
 
-            builder.AddMessaging();
-            builder.AddPersistence();
+            host.ConfigureServices((context, services) =>
+            {
+                services.AddDbContext<AppDbContext>(options =>
+                     options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.AddRepositories();
-            builder.AddServices();
-            builder.AddHostedServices();
+                services.AddScoped<IMessageService, RabbitMQService>();
 
-            var app = builder.Build();
+                services.AddScoped<IContactRepository, ContactRepository>();
+                services.AddScoped<ContactPersistenceService>();
 
-            ////using (var scope = app.Services.CreateScope())
-            ////{
-            ////    var migrationRunner = scope.ServiceProvider.GetRequiredService<DbInitializer>();
-            ////    migrationRunner.Initialize();
-            ////}
+                services.AddScoped<ContactCreatedConsumer>();
+                services.AddScoped<ContactUpdatedConsumer>();
+                services.AddScoped<ContactDeletedConsumer>();
 
-            return app;
-        }
+                services.AddHostedService<ConsumersWorker>();
+            });
 
-        private static IHostApplicationBuilder AddRepositories(this IHostApplicationBuilder builder)
-        {
-            builder.Services.AddSingleton<IContactRepository, ContactRepository>();
-            return builder;
-        }
+            var app = host.Build();
 
-        private static IHostApplicationBuilder AddServices(this IHostApplicationBuilder builder)
-        {
-            builder.Services.AddSingleton<ContactPersistenceService>();
-            return builder;
-        }
+            var metricServer = new KestrelMetricServer(port: 9091);
+            metricServer.Start();
 
-        private static IHostApplicationBuilder AddHostedServices(this IHostApplicationBuilder builder)
-        {
-            builder.Services.AddHostedService<Worker>();
-            return builder;
+            app.Run();
         }
     }
 }

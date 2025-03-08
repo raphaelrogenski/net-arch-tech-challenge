@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'commands'
+    metrics_path: '/api/metrics'
+    static_configs:
+      - targets: ['app-commands:8080']
+
+  - job_name: 'persistence'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['app-persistence:9091']
+
+  - job_name: 'query'
+    metrics_path: '/api/metrics'
+    static_configs:
+      - targets: ['app-query:80']
+
+  - job_name: 'dlqmonitor'
+    metrics_path: '/api/metrics'
+    static_configs:
+      - targets: ['app-dlqmonitor:80']

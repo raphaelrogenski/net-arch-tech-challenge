@@ -1,0 +1,50 @@
+﻿{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "app-commands",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/commands/api/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 10
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "app-query",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/query/api/{everything}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "10s",
+        "Limit": 5
+      }
+    }
+  ],
+  "RateLimitOptions": {
+    "DisableRateLimitHeaders": false,
+    "QuotaExceededMessage": "Rate limit exceeded. Please wait and try again.",
+    "HttpStatusCode": 429,
+    "ClientIdHeader": "ClientId",
+    "EnableRateLimiting": true
+  },
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8000"
+  }
+}

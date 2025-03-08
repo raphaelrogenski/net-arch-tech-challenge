@@ -19,7 +19,7 @@ public class RabbitMQService : IMessageService, IDisposable
         _logger = logger;
         var factory = new ConnectionFactory
         {
-            Uri = new Uri("amqp://guest:guest@localhost:5672/")
+            Uri = new Uri("amqp://guest:guest@tools-rabbitmq:5672/")
         };
 
         _connection = factory.CreateConnection();
@@ -29,7 +29,13 @@ public class RabbitMQService : IMessageService, IDisposable
     public void Publish<T>(T message)
     {
         var queueName = typeof(T).Name;
-        _channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+        var dlqName = $"{queueName}-dlq";
+
+        var args = new Dictionary<string, object>();
+        args["x-dead-letter-exchange"] = "";
+        args["x-dead-letter-routing-key"] = dlqName;
+
+        _channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false, arguments: args);
 
         var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(message));
         _channel.BasicPublish("", queueName, null, body);
@@ -37,26 +43,59 @@ public class RabbitMQService : IMessageService, IDisposable
         _logger.LogInformation($"Mensagem publicada na fila {queueName}: {typeof(T).Name}");
     }
 
-    public void Consume<T>(Func<T, Task> handler)
+    public void Consume<T>(Func<T, Task> handler, bool useDeadLetter = true)
     {
         var queueName = typeof(T).Name;
-        _channel.QueueDeclare(queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+        var dlqName = $"{queueName}-dlq";
+
+        var args = new Dictionary<string, object>();
+
+        if (useDeadLetter)
+        {
+            args["x-dead-letter-exchange"] = "";
+            args["x-dead-letter-routing-key"] = dlqName;
+        }
+
+        _channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false, arguments: args);
+        _channel.QueueDeclare(queue: dlqName, durable: true, exclusive: false, autoDelete: false, arguments: null);
 
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += async (model, ea) =>
         {
-            var body = ea.Body.ToArray();
-            var message = JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(body));
-
-            if (message != null)
+            try
             {
-                await handler(message);
-                _channel.BasicAck(ea.DeliveryTag, false);
+                var body = ea.Body.ToArray();
+                var message = JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(body));
+
+                if (message != null)
+                {
+                    await handler(message);
+                    _channel.BasicAck(ea.DeliveryTag, false);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Erro ao processar mensagem da fila {queueName}");
+                _channel.BasicNack(ea.DeliveryTag, false, false);
             }
         };
 
-        _channel.BasicConsume(queueName, false, consumer);
+        _channel.BasicConsume(queueName, autoAck: false, consumer);
         _logger.LogInformation($"Consumindo fila: {queueName}");
+    }
+
+    public T? ConsumeFromDLQ<T>()
+    {
+        var queueName = $"{typeof(T).Name}-dlq";
+
+        var result = _channel.BasicGet(queueName, autoAck: true);
+        if (result == null)
+            return default;
+
+        var body = result.Body.ToArray();
+        var message = JsonSerializer.Deserialize<T>(Encoding.UTF8.GetString(body));
+
+        return message;
     }
 
     public void Dispose()

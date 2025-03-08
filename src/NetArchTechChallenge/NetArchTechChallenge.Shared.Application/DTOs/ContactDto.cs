@@ -35,18 +35,6 @@ namespace NetArchTechChallenge.Shared.Application.DTOs
             if (entity == null)
                 throw new ApplicationException("Entry not found!");
 
-            if (dto.Id != Guid.Empty)
-            {
-                var hasChanged = false;
-                hasChanged |= entity.Name != dto.Name;
-                hasChanged |= entity.PhoneDDD != dto.PhoneDDD;
-                hasChanged |= entity.PhoneNumber != dto.PhoneNumber;
-                hasChanged |= entity.EmailAddress != dto.EmailAddress;
-
-                if (!hasChanged)
-                    throw new ApplicationException("Nothing to update!");
-            }
-
             entity.Name = dto.Name;
             entity.PhoneDDD = dto.PhoneDDD;
             entity.PhoneNumber = dto.PhoneNumber;

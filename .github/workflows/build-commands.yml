@@ -2,14 +2,14 @@ name: Build Commands
 
 on:
   push:
-    branches: [ "master " ]
+    branches: [ "main", "develop" ]
     paths:
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Commands/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Application/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Infrastructure/**'
   pull_request:
-    branches: [ "master " ]
+    branches: [ "main", "develop" ]
     paths:
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Commands/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
@@ -29,8 +29,8 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore and Build
-        run: dotnet build NetArchTechChallenge.Commands/NetArchTechChallenge.Commands.csproj --configuration Release
+        run: dotnet build src/NetArchTechChallenge/NetArchTechChallenge.Commands/NetArchTechChallenge.Commands.csproj --configuration Release
 
       - name: Run Tests (Unit and Integrated)
-        run: dotnet test NetArchTechChallenge.Commands.Tests/NetArchTechChallenge.Commands.Tests.csproj --configuration Release
+        run: dotnet test src/NetArchTechChallenge/NetArchTechChallenge.Commands.Tests/NetArchTechChallenge.Commands.Tests.csproj --configuration Release
         continue-on-error: true

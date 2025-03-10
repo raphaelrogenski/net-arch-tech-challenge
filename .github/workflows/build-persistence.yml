@@ -2,14 +2,14 @@ name: Build Persistence
 
 on:
   push:
-    branches: [ "master " ]
+    branches: [ "main", "develop" ]
     paths:
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Persistence/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Application/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Infrastructure/**'
   pull_request:
-    branches: [ "master " ]
+    branches: [ "main", "develop" ]
     paths:
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Persistence/**'
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
@@ -29,8 +29,8 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore and Build
-        run: dotnet build NetArchTechChallenge.Persistence/NetArchTechChallenge.Persistence.csproj --configuration Release
+        run: dotnet build src/NetArchTechChallenge/NetArchTechChallenge.Persistence/NetArchTechChallenge.Persistence.csproj --configuration Release
 
       - name: Run Tests (Unit and Integrated)
-        run: dotnet test NetArchTechChallenge.Persistence.Tests/NetArchTechChallenge.Persistence.Tests.csproj --configuration Release
+        run: dotnet test src/NetArchTechChallenge/NetArchTechChallenge.Persistence.Tests/NetArchTechChallenge.Persistence.Tests.csproj --configuration Release
         continue-on-error: true

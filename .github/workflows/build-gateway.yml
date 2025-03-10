@@ -2,11 +2,11 @@ name: Build Gateway
 
 on:
   push:
-    branches: [ "master " ]
+    branches: [ "main", "develop" ]
     paths:
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Gateway/**'
   pull_request:
-    branches: [ "master " ]
+    branches: [ "main", "develop" ]
     paths:
       - 'src/NetArchTechChallenge/NetArchTechChallenge.Gateway/**'
 
@@ -23,4 +23,4 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore and Build
-        run: dotnet build NetArchTechChallenge.Gateway/NetArchTechChallenge.Gateway.csproj --configuration Release
+        run: dotnet build src/NetArchTechChallenge/NetArchTechChallenge.Gateway/NetArchTechChallenge.Gateway.csproj --configuration Release

@@ -1,7 +1,3 @@
-# TechChallenge-PhaseTwo
-PÓS TECH FIAP - Projeto Fase 2 - GRUPO 60
+# Net Arch Tech Challenge
 
-# Members
-- Bruno Rocha - RM358676
-- Lucas Pio - RM358692
-- Raphael Rogenski - RM359455
+...

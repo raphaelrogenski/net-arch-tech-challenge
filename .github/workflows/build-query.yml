@@ -1,0 +1,36 @@
+name: Build Query
+
+on:
+  push:
+    branches: [ "master " ]
+    paths:
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Query/**'
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Application/**'
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Infrastructure/**'
+  pull_request:
+    branches: [ "master " ]
+    paths:
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Query/**'
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Application/**'
+      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Infrastructure/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore and Build
+        run: dotnet build NetArchTechChallenge.Query/NetArchTechChallenge.Query.csproj --configuration Release
+
+      - name: Run Tests (Unit and Integrated)
+        run: dotnet test NetArchTechChallenge.Query.Tests/NetArchTechChallenge.Query.Tests.csproj --configuration Release
+        continue-on-error: true

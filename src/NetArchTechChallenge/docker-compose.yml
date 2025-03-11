@@ -68,8 +68,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       RabbitMQ__HostName: tools-rabbitmq
     container_name: app-commands
-    ports:
-      - "8080:8080"
+    # ports:
+    #   - "8080:8080"
     networks:
       - netarch-network
     depends_on:
@@ -87,8 +87,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=tools-sqlserver,1433;Database=NetArch;User ID=sa;Password=SuaSenha123!;MultipleActiveResultSets=true;TrustServerCertificate=true"
       RabbitMQ__HostName: tools-rabbitmq
-    ports:
-      - "9091:9091"
+    # ports:
+    #   - "9091:9091"
     networks:
       - netarch-network
     depends_on:
@@ -104,8 +104,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Server=tools-sqlserver,1433;Database=NetArch;User ID=sa;Password=SuaSenha123!;MultipleActiveResultSets=true;TrustServerCertificate=true"
     container_name: app-query
-    ports:
-      - "7071:80"
+    # ports:
+    #   - "7071:80"
     networks:
       - netarch-network
     depends_on:
@@ -119,8 +119,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
     container_name: app-dlqmonitor
-    ports:
-      - "7072:80"
+    # ports:
+    #   - "7072:80"
     networks:
       - netarch-network
     depends_on:

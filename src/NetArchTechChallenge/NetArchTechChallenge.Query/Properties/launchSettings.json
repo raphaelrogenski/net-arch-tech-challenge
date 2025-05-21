@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "NetArchTechChallenge.Query": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 80",
-      "launchBrowser": false
-    }
-  }
-}

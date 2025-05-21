@@ -1,6 +1,6 @@
 # Net Arch Tech Challenge
 ## 6NETT | TechChallenge 4 | Grupo 29
-`Link: https://youtu.be/...`
+`Link: [https://youtu.be/...](https://youtu.be/swTEkdtt2ow)`
 
 # Tech Challenge — Kubernetes Deployment Guide
 

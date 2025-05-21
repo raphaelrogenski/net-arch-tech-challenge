@@ -4,17 +4,17 @@ on:
   push:
     branches: [ "main", "develop" ]
     paths:
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.DLQMonitor/**'
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Application/**'
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Infrastructure/**'
+      - 'src/NetArchTechChallenge.DLQMonitor/**'
+      - 'src/NetArchTechChallenge.Shared.Domain/**'
+      - 'src/NetArchTechChallenge.Shared.Application/**'
+      - 'src/NetArchTechChallenge.Shared.Infrastructure/**'
   pull_request:
     branches: [ "main", "develop" ]
     paths:
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.DLQMonitor/**'
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Domain/**'
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Application/**'
-      - 'src/NetArchTechChallenge/NetArchTechChallenge.Shared.Infrastructure/**'
+      - 'src/NetArchTechChallenge.DLQMonitor/**'
+      - 'src/NetArchTechChallenge.Shared.Domain/**'
+      - 'src/NetArchTechChallenge.Shared.Application/**'
+      - 'src/NetArchTechChallenge.Shared.Infrastructure/**'
 
 jobs:
   build:
@@ -29,8 +29,8 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore and Build
-        run: dotnet build src/NetArchTechChallenge/NetArchTechChallenge.DLQMonitor/NetArchTechChallenge.DLQMonitor.csproj --configuration Release
+        run: dotnet build src/NetArchTechChallenge.DLQMonitor/NetArchTechChallenge.DLQMonitor.csproj --configuration Release
 
       - name: Run Tests (Unit and Integrated)
-        run: dotnet test src/NetArchTechChallenge/NetArchTechChallenge.DLQMonitor.Tests/NetArchTechChallenge.DLQMonitor.Tests.csproj --configuration Release
+        run: dotnet test src/NetArchTechChallenge.DLQMonitor.Tests/NetArchTechChallenge.DLQMonitor.Tests.csproj --configuration Release
         continue-on-error: true

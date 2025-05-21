@@ -5,7 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: commands
-    component: api
+    component: app
+  annotations:
+    description: "API to receive write operations"
 spec:
   selector:
     app: commands

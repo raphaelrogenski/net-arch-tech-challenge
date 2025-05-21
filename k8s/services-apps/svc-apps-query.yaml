@@ -5,7 +5,7 @@ metadata:
   namespace: tech-challenge
   labels:
     app: query
-    component: function
+    component: app
 spec:
   selector:
     app: query

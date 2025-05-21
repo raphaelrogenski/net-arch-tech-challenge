@@ -6,6 +6,8 @@ metadata:
   labels:
     app: prometheus
     component: tools
+  annotations:
+    description: "Used to collect metrics"
 spec:
   selector:
     app: prometheus

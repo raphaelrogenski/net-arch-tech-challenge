@@ -5,7 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: query
-    component: function
+    component: app
+  annotations:
+    description: "Function to Query Data"
 spec:
   replicas: 1
   selector:
@@ -15,6 +17,7 @@ spec:
     metadata:
       labels:
         app: query
+        component: app
     spec:
       containers:
         - name: query

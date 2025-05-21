@@ -5,6 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: sqlserver
+    component: tools
+  annotations:
+    description: "Used as database"
 spec:
   replicas: 1
   selector:
@@ -14,6 +17,7 @@ spec:
     metadata:
       labels:
         app: sqlserver
+        component: tools
     spec:
       containers:
         - name: sqlserver

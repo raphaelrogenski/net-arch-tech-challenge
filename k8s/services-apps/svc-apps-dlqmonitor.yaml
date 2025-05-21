@@ -5,7 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: dlqmonitor
-    component: function
+    component: app
+  annotations:
+    description: "Function to process DQL"
 spec:
   selector:
     app: dlqmonitor

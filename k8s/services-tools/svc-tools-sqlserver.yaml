@@ -6,6 +6,8 @@ metadata:
   labels:
     app: sqlserver
     component: tools
+  annotations:
+    description: "Used as database"
 spec:
   selector:
     app: sqlserver

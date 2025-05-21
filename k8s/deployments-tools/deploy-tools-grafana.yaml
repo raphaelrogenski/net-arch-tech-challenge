@@ -5,6 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: grafana
+    component: tools
+  annotations:
+    description: "Used to see metrics"
 spec:
   replicas: 1
   selector:
@@ -14,6 +17,7 @@ spec:
     metadata:
       labels:
         app: grafana
+        component: tools
     spec:
       containers:
         - name: grafana

@@ -6,6 +6,8 @@ metadata:
   labels:
     app: grafana
     component: tools
+  annotations:
+    description: "Used to see metrics"
 spec:
   selector:
     app: grafana

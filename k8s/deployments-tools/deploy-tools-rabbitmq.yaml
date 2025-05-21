@@ -5,6 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: rabbitmq
+    component: tools
+  annotations:
+    description: "Used for messaging between services"
 spec:
   replicas: 1
   selector:
@@ -14,6 +17,7 @@ spec:
     metadata:
       labels:
         app: rabbitmq
+        component: tools
     spec:
       containers:
         - name: rabbitmq

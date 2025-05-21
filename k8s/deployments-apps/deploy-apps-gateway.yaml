@@ -5,7 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: gateway
-    component: api-gateway
+    component: app
+  annotations:
+    description: "Exposes internal app endpoints"
 spec:
   replicas: 1
   selector:
@@ -15,6 +17,7 @@ spec:
     metadata:
       labels:
         app: gateway
+        component: app
     spec:
       containers:
         - name: gateway

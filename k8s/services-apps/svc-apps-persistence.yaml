@@ -5,7 +5,9 @@ metadata:
   namespace: tech-challenge
   labels:
     app: persistence
-    component: worker
+    component: app
+  annotations:
+    description: "Worker to Write Data"
 spec:
   selector:
     app: persistence

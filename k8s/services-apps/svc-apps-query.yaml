@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-query
+  namespace: tech-challenge
+  labels:
+    app: query
+    component: function
+spec:
+  selector:
+    app: query
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

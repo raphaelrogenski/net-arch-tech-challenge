@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-persistence
+  namespace: tech-challenge
+  labels:
+    app: persistence
+    component: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: persistence
+  template:
+    metadata:
+      labels:
+        app: persistence
+    spec:
+      containers:
+        - name: persistence
+          image: local_persistence:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9091
+          envFrom:
+            - configMapRef:
+                name: config-rabbitmq
+            - configMapRef:
+                name: config-sqlserver
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development

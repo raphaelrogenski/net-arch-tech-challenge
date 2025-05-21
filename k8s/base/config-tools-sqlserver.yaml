@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-sqlserver
+  namespace: tech-challenge
+data:
+  CONNECTION_STRING: "Server=svc-sqlserver.tech-challenge.svc.cluster.local;Database=NetArch;User Id=sa;Password=SuaSenha123!;TrustServerCertificate=True;"

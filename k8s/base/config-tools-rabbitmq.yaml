@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-rabbitmq
+  namespace: tech-challenge
+data:
+  RABBITMQ__HOST: svc-rabbitmq.tech-challenge.svc.cluster.local
+  RABBITMQ__PORT: "5672"

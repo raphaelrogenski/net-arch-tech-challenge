@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-commands
+  namespace: tech-challenge
+  labels:
+    app: commands
+    component: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commands
+  template:
+    metadata:
+      labels:
+        app: commands
+    spec:
+      containers:
+        - name: commands
+          image: local_commands:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: config-rabbitmq
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development

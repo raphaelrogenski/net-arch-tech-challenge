@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-persistence
+  namespace: tech-challenge
+  labels:
+    app: persistence
+    component: worker
+spec:
+  selector:
+    app: persistence
+  ports:
+    - port: 9091
+      targetPort: 9091
+  type: ClusterIP
